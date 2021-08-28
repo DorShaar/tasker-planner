@@ -1,5 +1,6 @@
 class TaskData:
-    def __init__(self, type: str):  
+    def __init__(self, type: str, name: str):  
         self.type = type
+        self.name = name
         self.effectDescription = ""
-        
+        self.subTasks = []

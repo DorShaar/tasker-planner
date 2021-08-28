@@ -1,6 +1,10 @@
 class UserQuestioner:
     def __init__(self):  
-        self.shouldExit = False  
+        self.shouldExit = False
+        self.exitInputs = {
+            "q" : "exit",
+            "exit" : "exit"
+        }
 
     def getTaskTypeInput(self) -> str:
         userInput = input("Is it bug or a feature?\n")
@@ -11,9 +15,9 @@ class UserQuestioner:
             "b" : "bug",
             "feature" : "feature",
             "f" : "feature",
-            "q" : "exit",
-            "exit" : "exit"
         }
+
+        allowedInputs.update(self.exitInputs)
 
         while userInput not in allowedInputs:
             userInput = input(f"\'{userInput}\' is invalid. Is it bug or a feature?\n")
@@ -31,4 +35,9 @@ class UserQuestioner:
         elif taskType == "bug":
             question = "How is the user affected?"
 
-        return input(f"{question}\n")
+        userInput = input(f"{question}\n")
+
+        if userInput in self.exitInputs:
+            self.shouldExit = True
+
+        return userInput
