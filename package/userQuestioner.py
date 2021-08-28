@@ -30,7 +30,7 @@ class UserQuestioner:
 
         return allowedInputs[userInput]
 
-    def get_bug_or_feature_input(self, taskType: str) -> str:
+    def getUserExperienceInput(self, taskType: str) -> str:
         question = ""
         if taskType == "feature":
             question = "How will the user affected?"
