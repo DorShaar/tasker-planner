@@ -6,6 +6,10 @@ class UserQuestioner:
             "exit" : "exit"
         }
 
+    def checkIfUserChoseToExit(self, userInput: str):
+        if userInput in self.exitInputs:
+            self.shouldExit = True
+
     def getTaskTypeInput(self) -> str:
         userInput = input("Is it bug or a feature?\n")
         userInput = userInput.lower()
@@ -22,9 +26,7 @@ class UserQuestioner:
         while userInput not in allowedInputs:
             userInput = input(f"\'{userInput}\' is invalid. Is it bug or a feature?\n")
 
-        if allowedInputs[userInput] == "exit":
-            self.shouldExit = True
-            return ""
+        self.checkIfUserChoseToExit(userInput)
 
         return allowedInputs[userInput]
 
@@ -37,7 +39,6 @@ class UserQuestioner:
 
         userInput = input(f"{question}\n")
 
-        if userInput in self.exitInputs:
-            self.shouldExit = True
+        self.checkIfUserChoseToExit(userInput)
 
         return userInput
