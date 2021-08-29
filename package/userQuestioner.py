@@ -5,6 +5,10 @@ class UserQuestioner:
             "q" : "exit",
             "exit" : "exit"
         }
+        self.yesInputs = {
+            "yes" : "yes",
+            "y" : "yes",
+        }
 
     def checkIfUserChoseToExit(self, userInput: str):
         if userInput in self.exitInputs:
@@ -41,4 +45,16 @@ class UserQuestioner:
 
         self.checkIfUserChoseToExit(userInput)
 
+        return userInput
+
+    def askForAnalytics(self, taskName: str) -> int:
+        userInput = input(f"Does '{taskName}' requires analytics?\n")
+        if userInput.lower() not in self.yesInputs:
+            return -1
+
+        userInput = input(f"Does '{taskName}' has analytics?\n")
+        if userInput.lower() in self.yesInputs:
+            return -1
+
+        userInput = input(f"How much analytics work is requires for task'{taskName}'?\n")
         return userInput
