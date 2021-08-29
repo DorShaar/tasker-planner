@@ -14,7 +14,7 @@ class UserQuestioner:
         if userInput in self.exitInputs:
             self.shouldExit = True
 
-    def getTaskTypeInput(self) -> str:
+    def askTaskTypeInput(self) -> str:
         userInput = input("Is it bug or a feature?\n")
         userInput = userInput.lower()
 
@@ -34,7 +34,7 @@ class UserQuestioner:
 
         return allowedInputs[userInput]
 
-    def getUserExperienceInput(self, taskType: str) -> str:
+    def askUserExperienceInput(self, taskType: str) -> str:
         question = ""
         if taskType == "feature":
             question = "How will the user affected?"
@@ -46,6 +46,9 @@ class UserQuestioner:
         self.checkIfUserChoseToExit(userInput)
 
         return userInput
+
+    def askForTaskName(self) -> str:
+        return input(f"What is the task name?\n")
 
     def askForAnalytics(self, taskName: str) -> int:
         userInput = input(f"Does '{taskName}' requires analytics?\n")
