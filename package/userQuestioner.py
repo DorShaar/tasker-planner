@@ -1,5 +1,8 @@
+import json
+
 class UserQuestioner:
-    def __init__(self):  
+    def __init__(self):
+        self.stateDict = [],
         self.shouldExit = False
         self.exitInputs = {
             "q" : "exit",
@@ -9,6 +12,37 @@ class UserQuestioner:
             "yes" : "yes",
             "y" : "yes",
         }
+
+    def replaceString(self, string: str) -> str:
+        return string # TODO # Also add logs
+
+    def askQuestions(self, question: str) -> str:
+        userInput = input(question)
+        self.stateDict[question] = userInput
+
+    def askQuestionsFromJson(self):
+        jsonFile = open('plan.json')
+        jsonData = json.load(jsonFile)
+        
+        for planSection in jsonData['plan']:
+            for key in planSection:
+                if key == "question":
+                    self.askQuestions(planSection[key])
+                
+
+                #         print (planSection[key])
+                # elif key == "allowedAnswers":
+                #     print (planSection[key])
+
+        # for majorkey, subdict in jsonData.items():
+            # print (section)
+            # print (subdict)
+            # for subkey, value in subdict.items():
+            #         print (subkey, value)
+        
+        jsonFile.close()
+
+
 
     def checkIfUserChoseToExit(self, userInput: str):
         if userInput in self.exitInputs:

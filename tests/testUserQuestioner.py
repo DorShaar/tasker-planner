@@ -5,6 +5,10 @@ from package.userQuestioner import UserQuestioner
 
 class TestUserQuestioner(unittest.TestCase):
 
+    def test_readJsonFile(self):
+        userQuestioner = UserQuestioner()
+        userQuestioner.readJson()
+
     @mock.patch('package.userQuestioner.input', return_value='q')
     def test_askTaskTypeInput_exitInput(self, mocked_input):
         userQuestioner = UserQuestioner()
