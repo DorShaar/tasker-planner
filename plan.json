@@ -10,29 +10,19 @@
 			"variableName": "taskName"
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "taskType",
-					"predicatCases": [
-						{
-							"bug": [
-								{
-									"question": "How is the user currently affected?",
-									"variableName": "userExperience"
-								}
-							]
-						},
-						{
-							"feature": [
-								{
-									"question": "How will the user be positively affected?",
-									"variableName": "userExperience"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "taskType",
+				"predicatCases": {
+					"bug": {
+						"question": "How is the user currently affected?",
+						"variableName": "userExperience"
+					},
+					"feature": {
+						"question": "How will the user be positively affected?",
+						"variableName": "userExperience"
+					}
 				}
-			]
+			}
 		},
 		{
 			"question": "What is the DOD (Definition of Done) of '{taskName}'?",
@@ -44,40 +34,28 @@
 			"variableName": "requiresLearning"
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "requiresLearning",
-					"predicatCases": [
-						{
-							"yes": [
-								{
-									"question": "How much learning work is required for task '{taskName}'?",
-									"answersRange": ["1", "30"],
-									"variableName": "learningTime"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "requiresLearning",
+				"predicatCases": {
+					"yes": {
+						"question": "How much learning work is required for task '{taskName}'?",
+						"answersRange": ["1", "30"],
+						"variableName": "learningTime"
+					}
 				}
-			]
+			}
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "requiresLearning",
-					"predicatCases": [
-						{
-							"yes": [
-								{
-									"question": "How much time needed to spend on knowledge sharing?",
-									"answersRange": ["1", "30"],
-									"variableName": "knowledgeSharingTime"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "requiresLearning",
+				"predicatCases": {
+					"yes": {
+						"question": "How much time needed to spend on knowledge sharing?",
+						"answersRange": ["1", "30"],
+						"variableName": "knowledgeSharingTime"
+					}
 				}
-			]
+			}
 		},
 		{
 			"question": "Does '{taskName}' requires analytics?",
@@ -85,39 +63,27 @@
 			"variableName": "requiresAnalytics"
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "requiresAnalytics",
-					"predicatCases": [
-						{
-							"yes": [
-								{
-									"question": "How much analytics work is required for task '{taskName}'?",
-									"answersRange": ["1", "30"],
-									"variableName": "analyticsTime"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "requiresAnalytics",
+				"predicatCases": {
+					"yes": {
+						"question": "How much analytics work is required for task '{taskName}'?",
+						"answersRange": ["1", "30"],
+						"variableName": "analyticsTime"
+					}
 				}
-			]
+			}
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "taskType",
-					"predicatCases": [
-						{
-							"bug": [
-								{
-									"question": "Which version does the client use?",
-									"variableName": "clientVersion"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "taskType",
+				"predicatCases": {
+					"bug": {
+						"question": "Which version does the client use?",
+						"variableName": "clientVersion"
+					}
 				}
-			]
+			}
 		},
 		{
 			"question": "Is it important to make the fix work on the client's specific version?",
@@ -130,40 +96,28 @@
 			"variableName": "shouldCollectSamples"
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "shouldCollectSamples",
-					"predicatCases": [
-						{
-							"yes": [
-								{
-									"question": "How much time should it take to collect or create more samples?",
-									"answersRange": ["1", "30"],
-									"variableName": "collectSamplesTime"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "shouldCollectSamples",
+				"predicatCases": {
+					"yes": {
+						"question": "How much time should it take to collect or create more samples?",
+						"answersRange": ["1", "30"],
+						"variableName": "collectSamplesTime"
+					}
 				}
-			]
+			}
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "taskType",
-					"predicatCases": [
-						{
-							"bug": [
-								{
-									"question": "How much time should it take to reproduce the bug?",
-									"answersRange": ["1", "30"],
-									"variableName": "reproduceTime"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "taskType",
+				"predicatCases": {
+					"bug": {
+						"question": "How much time should it take to reproduce the bug?",
+						"answersRange": ["1", "30"],
+						"variableName": "reproduceTime"
+					}
 				}
-			]
+			}
 		},
 		{
 			"question": "How much time needed for writing UT's and E2E tests for '{taskName}'?",
@@ -181,32 +135,24 @@
 			"variableName": "shouldPresentDoneWork"
 		},
 		{
-			"predicat": [
-				{
-					"predicatParameter": "shouldPresentDoneWork",
-					"predicatCases": [
-						{
-							"yes": [
-								{
-									"question": "How much time should it take to present '{taskName}'?",
-									"answersRange": ["1", "10"],
-									"variableName": "presentDoneWorkTime"
-								}
-							]
-						}
-					]
+			"predicat": {
+				"predicatParameter": "shouldPresentDoneWork",
+				"predicatCases": {
+					"yes": {
+						"question": "How much time should it take to present '{taskName}'?",
+						"answersRange": ["1", "10"],
+						"variableName": "presentDoneWorkTime"
+					}
 				}
-			]
+			}
 		}
 	],
-	"duringWork": [
-		{
-			"helper1": ["requiresLearning", "idNeeded, try share information prior to start writing code, in order to get feedback from experienced co-workers"],
-			"helper2": ["cleanCode", "Clean code but don't refactor. It may be difficult for your reviewer to observe your changes"],
-			"helper3": ["TDD", "Try writing your tests before writing your code"],
-			"helper4": ["Avoid dependencies", "If you can implement it without the fear of bugs, try avoid dependencies so we won't be dependant on 3rd parties fixes"],
-			"todo": ["show the user all the relevant parameters he wrote. For example: 'collect samples'"],
-			"logTest": ["Test your logs, make sure everything is as expected"]
-		}
-	]
+	"duringWork": {
+		"helper1": ["requiresLearning", "idNeeded, try share information prior to start writing code, in order to get feedback from experienced co-workers"],
+		"helper2": ["cleanCode", "Clean code but don't refactor. It may be difficult for your reviewer to observe your changes"],
+		"helper3": ["TDD", "Try writing your tests before writing your code"],
+		"helper4": ["Avoid dependencies", "If you can implement it without the fear of bugs, try avoid dependencies so we won't be dependant on 3rd parties fixes"],
+		"todo": ["show the user all the relevant parameters he wrote. For example: 'collect samples'"],
+		"logTest": ["Test your logs, make sure everything is as expected"]
+	}
 }
