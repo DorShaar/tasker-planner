@@ -2,7 +2,7 @@
 	"plan": [
 		{
 			"question": "Is it bug or a feature?",
-			"allowedAnswers": ["feature", "f", "bug", "b"],
+			"allowedAnswers": {"feature": "feature", "f": "feature", "bug": "bug", "b": "bug"},
 			"variableName": "taskType"
 		},
 		{
@@ -39,7 +39,7 @@
 				"predicatCases": {
 					"yes": {
 						"question": "How much learning work is required for task '{taskName}'?",
-						"answersRange": ["1", "30"],
+						"answerRange": ["1", "30"],
 						"variableName": "learningTime"
 					}
 				}
@@ -51,7 +51,7 @@
 				"predicatCases": {
 					"yes": {
 						"question": "How much time needed to spend on knowledge sharing?",
-						"answersRange": ["1", "30"],
+						"answerRange": ["1", "30"],
 						"variableName": "knowledgeSharingTime"
 					}
 				}
@@ -68,19 +68,8 @@
 				"predicatCases": {
 					"yes": {
 						"question": "How much analytics work is required for task '{taskName}'?",
-						"answersRange": ["1", "30"],
+						"answerRange": ["1", "30"],
 						"variableName": "analyticsTime"
-					}
-				}
-			}
-		},
-		{
-			"predicat": {
-				"predicatParameter": "taskType",
-				"predicatCases": {
-					"bug": {
-						"question": "Which version does the client use?",
-						"variableName": "clientVersion"
 					}
 				}
 			}
@@ -91,7 +80,30 @@
 			"variableName": "isFixShouldBeForSpecificVersion"
 		},
 		{
-			"question": "Do we have enough samples to test '{taskName}'? Should we collect or create more samples?",
+			"predicat": {
+				"predicatParameter": "isFixShouldBeForSpecificVersion",
+				"predicatCases": {
+					"yes": {
+						"question": "Which version does the '{taskName}' is targeted for?",
+						"variableName": "clientVersion"
+					}
+				}
+			}
+		},
+		{
+			"predicat": {
+				"predicatParameter": "isFixShouldBeForSpecificVersion",
+				"predicatCases": {
+					"yes": {
+						"question": "How much time does it take to test fix on version '{clientVersion}'?",
+						"answerRange": ["1", "20"],
+						"variableName": "testOnSpecificVersionTime"
+					}
+				}
+			}
+		},
+		{
+			"question": "Arewe short with samples to test '{taskName}'? Should we collect or create more samples?",
 			"yesNoAnswers": true,
 			"variableName": "shouldCollectSamples"
 		},
@@ -101,7 +113,7 @@
 				"predicatCases": {
 					"yes": {
 						"question": "How much time should it take to collect or create more samples?",
-						"answersRange": ["1", "30"],
+						"answerRange": ["1", "30"],
 						"variableName": "collectSamplesTime"
 					}
 				}
@@ -113,7 +125,7 @@
 				"predicatCases": {
 					"bug": {
 						"question": "How much time should it take to reproduce the bug?",
-						"answersRange": ["1", "30"],
+						"answerRange": ["1", "30"],
 						"variableName": "reproduceTime"
 					}
 				}
@@ -121,12 +133,12 @@
 		},
 		{
 			"question": "How much time needed for writing UT's and E2E tests for '{taskName}'?",
-			"answersRange": ["1", "30"],
+			"answerRange": ["1", "30"],
 			"variableName": "writingTestsTime"
 		},
 		{
 			"question": "Can QA reproduce or test the bug? Make sure QA knows what to test",
-			"answersRange": ["1", "5"],
+			"answerRange": ["1", "5"],
 			"variableName": "qaSyncTime"
 		},
 		{
@@ -140,7 +152,7 @@
 				"predicatCases": {
 					"yes": {
 						"question": "How much time should it take to present '{taskName}'?",
-						"answersRange": ["1", "10"],
+						"answerRange": ["1", "10"],
 						"variableName": "presentDoneWorkTime"
 					}
 				}

@@ -1,5 +1,6 @@
 import logging
 import sys
+from domain.stringReplacer import StringReplacer
 from infra.userQuestioner import UserQuestioner
 
 def main():
@@ -11,8 +12,10 @@ def main():
 
     logging.info('Tasker Planner Started')
 
-    userQuestioner = UserQuestioner()
-    userQuestioner.askQuestionsFromJson()
+    stringReplacer = StringReplacer()
+    userQuestioner = UserQuestioner(stringReplacer)
+    
+    print(userQuestioner.askQuestionsFromJsonFile('plan.json'))
 
     logging.info('Tasker Planner Finished')
 

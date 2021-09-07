@@ -1,0 +1,3 @@
+UT for feature
+plan class (maybe I should use userQuestioner) that can change current plans.
+dockerize
