@@ -60,7 +60,7 @@ class TestUserQuestioner(unittest.TestCase):
         value = planDict.pop("analyticsTime")
         self.assertEqual("3", value)
 
-        value = planDict.pop("isFixShouldBeForSpecificVersion")
+        value = planDict.pop("isTaskShouldBeForSpecificVersion")
         self.assertEqual("yes", value)
 
         value = planDict.pop("clientVersion")
@@ -75,6 +75,72 @@ class TestUserQuestioner(unittest.TestCase):
         value = planDict.pop("reproduceTime")
         self.assertEqual("1", value)
 
+        value = planDict.pop("writingTestsTime")
+        self.assertEqual("5", value)
+
+        value = planDict.pop("qaSyncTime")
+        self.assertEqual("2", value)
+
+        value = planDict.pop("shouldPresentDoneWork")
+        self.assertEqual("no", value)
+
+        print(planDict)
+        self.assertEqual(0, len(planDict))
+
+    input_mock = Mock()
+    input_mock.side_effect = [
+        "k", "f",
+        "Add more logs",
+        "User will be able to know where failure has happend",
+        "80% of the methods will have logs",
+        "j", "n",
+        "y",
+        "1",
+        "n",
+        "y",
+        "2",
+        "5",
+        "y",
+        "2",
+        "no"
+        ]
+    @mock.patch('package.infra.userQuestioner.input', input_mock)
+    def test_askQuestionsFromJsonFile_feature_asExpected(self):
+        stringReplacer = StringReplacer()
+
+        userQuestioner = UserQuestioner(stringReplacer)
+
+        planDict = userQuestioner.askQuestionsFromJsonFile('plan.json')
+        value = planDict.pop("taskType")
+        self.assertEqual("feature", value)
+
+        value = planDict.pop("taskName")
+        self.assertEqual("Add more logs", value)
+
+        value = planDict.pop("userExperience")
+        self.assertEqual("User will be able to know where failure has happend", value)
+
+        value = planDict.pop("dod")
+        self.assertEqual("80% of the methods will have logs", value)
+
+        value = planDict.pop("requiresLearning")
+        self.assertEqual("no", value)
+
+        value = planDict.pop("requiresAnalytics")
+        self.assertEqual("yes", value)
+
+        value = planDict.pop("analyticsTime")
+        self.assertEqual("1", value)
+
+        value = planDict.pop("isTaskShouldBeForSpecificVersion")
+        self.assertEqual("no", value)
+
+        value = planDict.pop("shouldCollectSamples")
+        self.assertEqual("yes", value)
+
+        value = planDict.pop("collectSamplesTime")
+        self.assertEqual("2", value)
+        
         value = planDict.pop("writingTestsTime")
         self.assertEqual("5", value)
 

@@ -39,12 +39,19 @@ class UserQuestioner:
         minValue = int(allowedAnswerRange[0])
         maxValue = int(allowedAnswerRange[1])
 
-        if int(self.userInput) in range(minValue, maxValue+1):
-            return
-        
-        logging.debug('%s is not in range %d - %d', self.userInput, minValue, maxValue)
-        self.askQuestion(self.lastQuestion)
-        self.checkAnswerRange(allowedAnswerRange)
+        try:
+            userInputInteger = int(self.userInput)
+            if userInputInteger in range(minValue, maxValue+1):
+                return        
+
+            logging.debug('%s is not in range %d - %d', self.userInput, minValue, maxValue)
+            self.askQuestion(self.lastQuestion)
+            self.checkAnswerRange(allowedAnswerRange)
+
+        except Exception:
+            logging.debug('%s is not an integer', self.userInput)
+            self.askQuestion(self.lastQuestion)
+            self.checkAnswerRange(allowedAnswerRange)
 
     def checkYesAndNoAnswers(self, isYesNoAnswersEnabled):
         if isYesNoAnswersEnabled:

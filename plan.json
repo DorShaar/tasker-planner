@@ -75,13 +75,13 @@
 			}
 		},
 		{
-			"question": "Is it important to make the fix work on the client's specific version?",
+			"question": "Is it important to make the task '{taskName}' work on the client's specific version?",
 			"yesNoAnswers": true,
-			"variableName": "isFixShouldBeForSpecificVersion"
+			"variableName": "isTaskShouldBeForSpecificVersion"
 		},
 		{
 			"predicat": {
-				"predicatParameter": "isFixShouldBeForSpecificVersion",
+				"predicatParameter": "isTaskShouldBeForSpecificVersion",
 				"predicatCases": {
 					"yes": {
 						"question": "Which version does the '{taskName}' is targeted for?",
@@ -92,7 +92,7 @@
 		},
 		{
 			"predicat": {
-				"predicatParameter": "isFixShouldBeForSpecificVersion",
+				"predicatParameter": "isTaskShouldBeForSpecificVersion",
 				"predicatCases": {
 					"yes": {
 						"question": "How much time does it take to test fix on version '{clientVersion}'?",
@@ -103,7 +103,7 @@
 			}
 		},
 		{
-			"question": "Arewe short with samples to test '{taskName}'? Should we collect or create more samples?",
+			"question": "Are we short with samples to test '{taskName}'? Should we collect or create more samples?",
 			"yesNoAnswers": true,
 			"variableName": "shouldCollectSamples"
 		},
