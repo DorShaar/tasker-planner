@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasker-planner
+  labels:
+    app: tasker-planner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tasker-planner
+  template:
+    metadata:
+      labels:
+        app: tasker-planner
+    spec:
+      containers:
+      - name: tasker-planner
+        image: tasker-planner:1.0

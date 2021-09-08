@@ -10,11 +10,11 @@ def main():
     # streamHandler.setFormatter(format)
     logging.getLogger().addHandler(streamHandler)
 
-    logging.info('Tasker Planner Started')
-
     stringReplacer = StringReplacer()
     userQuestioner = UserQuestioner(stringReplacer)
-    
+
+    logging.info('Tasker Planner Started')
+
     print(userQuestioner.askQuestionsFromJsonFile('plan.json'))
 
     logging.info('Tasker Planner Finished')
