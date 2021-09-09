@@ -117,4 +117,16 @@ class UserQuestioner:
         jsonFile.close()
         return self.stateDict
 
-    
+    def editPlan(self):
+        for key, value in self.stateDict.items():
+            logging.debug('%s: %s', key, value)
+
+        self.userInput = input("Which key would you like to edit?\n")
+        if self.userInput not in self.stateDict:
+            logging.debug('Key "%s" does not exist', self.userInput)
+            return
+
+        key = self.userInput
+        self.userInput = input("Please type your changes\n")
+        self.stateDict[key] = self.userInput
+        logging.debug('Replaced key "%s" with new value: "%s"', key, self.stateDict[key])

@@ -153,5 +153,27 @@ class TestUserQuestioner(unittest.TestCase):
         print(planDict)
         self.assertEqual(0, len(planDict))
 
+    input_mock = Mock()
+    input_mock.side_effect = [
+        "taskName",
+        "Reduce redundant logs",
+        ]
+    @mock.patch('package.infra.userQuestioner.input', input_mock)
+    def test_editPlan_asExpected(self):
+        stringReplacer = StringReplacer()
+
+        userQuestioner = UserQuestioner(stringReplacer)
+
+        userQuestioner.stateDict = {
+            "taskType": "feature",
+            "taskName": "Add more logs",
+            "userExperience": "User will be able to know where failure has happend",
+            "requiresAnalytics": "yes",
+            "analyticsTime": "1"
+        }
+
+        userQuestioner.editPlan()
+        self.assertEqual("Reduce redundant logs", userQuestioner.stateDict["taskName"])
+
 if __name__ == '__main__':
     unittest.main()

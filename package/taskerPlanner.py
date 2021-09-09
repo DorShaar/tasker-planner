@@ -1,5 +1,7 @@
 import logging
 import sys
+from consolemenu import *
+from consolemenu.items import *
 from domain.stringReplacer import StringReplacer
 from infra.userQuestioner import UserQuestioner
 
@@ -13,9 +15,16 @@ def main():
     stringReplacer = StringReplacer()
     userQuestioner = UserQuestioner(stringReplacer)
 
-    logging.info('Tasker Planner Started')
+    # Create the menu
+    menu = ConsoleMenu("Tasker Planner", "By dorshaar")
 
-    print(userQuestioner.askQuestionsFromJsonFile('plan.json'))
+    askQuestionsFromJsonFileItem = FunctionItem("Start new plan", userQuestioner.askQuestionsFromJsonFile, ['plan-short-version.json'])
+    editPlanItem = FunctionItem("Edit exiting plan", userQuestioner.editPlan)
+
+    menu.append_item(askQuestionsFromJsonFileItem)
+    menu.append_item(editPlanItem)
+
+    menu.show()
 
     logging.info('Tasker Planner Finished')
 

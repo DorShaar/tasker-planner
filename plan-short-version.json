@@ -1,0 +1,49 @@
+{
+	"plan": [
+		{
+			"question": "Is it bug or a feature?",
+			"allowedAnswers": {"feature": "feature", "f": "feature", "bug": "bug", "b": "bug"},
+			"variableName": "taskType"
+		},
+		{
+			"question": "What is the name of the {taskType}?",
+			"variableName": "taskName"
+		},
+		{
+			"predicat": {
+				"predicatParameter": "taskType",
+				"predicatCases": {
+					"bug": {
+						"question": "How is the user currently affected?",
+						"variableName": "userExperience"
+					},
+					"feature": {
+						"question": "How will the user be positively affected?",
+						"variableName": "userExperience"
+					}
+				}
+			}
+		},
+		{
+			"question": "What is the DOD (Definition of Done) of '{taskName}'?",
+			"variableName": "dod"
+		},
+		{
+			"question": "Does '{taskName}' requires learning new information?",
+			"yesNoAnswers": true,
+			"variableName": "requiresLearning"
+		},
+		{
+			"predicat": {
+				"predicatParameter": "requiresLearning",
+				"predicatCases": {
+					"yes": {
+						"question": "How much learning work is required for task '{taskName}'?",
+						"answerRange": ["1", "30"],
+						"variableName": "learningTime"
+					}
+				}
+			}
+		}
+	]
+}
