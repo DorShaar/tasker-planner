@@ -18,7 +18,7 @@ def main():
     # Create the menu
     menu = ConsoleMenu("Tasker Planner", "By dorshaar")
 
-    askQuestionsFromJsonFileItem = FunctionItem("Start new plan", userQuestioner.askQuestionsFromJsonFile, ['plan.json'])
+    askQuestionsFromJsonFileItem = FunctionItem("Start new plan", userQuestioner.askQuestionsFromJsonFile, ['plan/plan.json'])
     editPlanItem = FunctionItem("Edit exiting plan", userQuestioner.editPlan)
 
     menu.append_item(askQuestionsFromJsonFileItem)

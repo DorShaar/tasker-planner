@@ -1,2 +1,1 @@
-dockerize - write script that mapps volume
-plan class (maybe I should use userQuestioner) that can change current plans.
+tasker planner should manage plans according to files
