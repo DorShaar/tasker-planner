@@ -18,12 +18,12 @@ class UserQuestioner:
             "n": "no"
         }
 
-    def askQuestion(self, question: str):
+    def __askQuestion(self, question: str):
         self.lastQuestion = question
         formattedQuestion = self.stringReplacer.replaceString(question, self.stateDict)
         self.userInput = input(f"{formattedQuestion}\n")
 
-    def checkAllowedAnswers(self, allowedAnswers):
+    def __checkAllowedAnswers(self, allowedAnswers):
         if self.userInput in allowedAnswers:
             if isinstance(allowedAnswers, dict):
                 logging.debug('User input "%s" is mapped to "%s" according to allowed answers', self.userInput, allowedAnswers[self.userInput])
@@ -32,10 +32,10 @@ class UserQuestioner:
             return
         
         logging.debug('%s is not an expected answer', self.userInput)
-        self.askQuestion(self.lastQuestion)
-        self.checkAllowedAnswers(allowedAnswers)
+        self.__askQuestion(self.lastQuestion)
+        self.__checkAllowedAnswers(allowedAnswers)
 
-    def checkAnswerRange(self, allowedAnswerRange):
+    def __checkAnswerRange(self, allowedAnswerRange):
         minValue = int(allowedAnswerRange[0])
         maxValue = int(allowedAnswerRange[1])
 
@@ -45,15 +45,15 @@ class UserQuestioner:
                 return        
 
             logging.debug('%s is not in range %d - %d', self.userInput, minValue, maxValue)
-            self.askQuestion(self.lastQuestion)
-            self.checkAnswerRange(allowedAnswerRange)
+            self.__askQuestion(self.lastQuestion)
+            self.__checkAnswerRange(allowedAnswerRange)
 
         except Exception:
             logging.debug('%s is not an integer', self.userInput)
-            self.askQuestion(self.lastQuestion)
-            self.checkAnswerRange(allowedAnswerRange)
+            self.__askQuestion(self.lastQuestion)
+            self.__checkAnswerRange(allowedAnswerRange)
 
-    def checkYesAndNoAnswers(self, isYesNoAnswersEnabled):
+    def __checkYesAndNoAnswers(self, isYesNoAnswersEnabled):
         if isYesNoAnswersEnabled:
             if self.userInput in self.yesNoInputs:
                 logging.debug('User input "%s" is mapped to "%s" according to "yes and no answers"', self.userInput, self.yesNoInputs[self.userInput])
@@ -61,44 +61,44 @@ class UserQuestioner:
                 return
             
             logging.debug('%s is not an expected answer', self.userInput)
-            self.askQuestion(self.lastQuestion)
-            self.checkYesAndNoAnswers(isYesNoAnswersEnabled)
+            self.__askQuestion(self.lastQuestion)
+            self.__checkYesAndNoAnswers(isYesNoAnswersEnabled)
                 
 
-    def setVariableName(self, variableName):
+    def __setVariableName(self, variableName):
         logging.debug('Added key "%s" with value "%s" to state dictionary', variableName, self.userInput)
         self.stateDict[variableName] = self.userInput
 
-    def handlePredicat(self, predicat):
+    def __handlePredicat(self, predicat):
         predicateParameter = predicat["predicatParameter"]
         predicateParameterValue = self.stateDict[predicateParameter]
         if predicateParameterValue in predicat["predicatCases"]:
             section = predicat["predicatCases"][predicateParameterValue]
             for sectionKey in section:
-                self.handlePlanSectionByKey(section, sectionKey)
+                self.__handlePlanSectionByKey(section, sectionKey)
 
-    def handlePlanSectionByKey(self, planSection, key):
+    def __handlePlanSectionByKey(self, planSection, key):
         if self.userInput in self.exitInputs:
             return
 
         try:
             if key == "question":
-                self.askQuestion(planSection[key])
+                self.__askQuestion(planSection[key])
 
             elif key == "allowedAnswers":
-                self.checkAllowedAnswers(planSection[key])
+                self.__checkAllowedAnswers(planSection[key])
 
             elif key == "answerRange":
-                self.checkAnswerRange(planSection[key])
+                self.__checkAnswerRange(planSection[key])
 
             elif key == "yesNoAnswers":
-                self.checkYesAndNoAnswers(planSection[key])
+                self.__checkYesAndNoAnswers(planSection[key])
 
             elif key == "variableName":
-                self.setVariableName(planSection[key])
+                self.__setVariableName(planSection[key])
 
             elif key == "predicat":
-                self.handlePredicat(planSection[key])
+                self.__handlePredicat(planSection[key])
 
             else:
                 logging.error('Unexpected key: %s', key)
@@ -112,7 +112,9 @@ class UserQuestioner:
         
         for planSection in jsonData['plan']:
             for key in planSection:
-                self.handlePlanSectionByKey(planSection, key)
+                self.__handlePlanSectionByKey(planSection, key)
         
         jsonFile.close()
         return self.stateDict
+
+    
