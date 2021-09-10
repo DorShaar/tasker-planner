@@ -122,11 +122,16 @@ class UserQuestioner:
         jsonFile = open(fileName)
         jsonData = json.load(jsonFile)
         
+        shouldStop = False
         for planSection in jsonData['plan']:
             for key in planSection:
-                if not self.__handlePlanSectionByKey(planSection, key):
+                shouldStop = not self.__handlePlanSectionByKey(planSection, key)
+                if shouldStop:
                     break
-        
+            
+            if shouldStop:
+                break
+
         jsonFile.close()
         self.fileSaver.savePlan(self.stateDict)
         return self.stateDict
