@@ -1,15 +1,13 @@
 import logging
+from package.domain.fileSaver import FileSaver
 import sys
 import os
 from consolemenu import *
 from consolemenu.items import *
 from consolemenu.format import *
+from package.domain.consts import PLAN_QUESTIONS_FILE_PATH, getPlansDirectory
 from domain.stringReplacer import StringReplacer
 from infra.userQuestioner import UserQuestioner
-
-# PLANS_DIRECTORY = "data/plans/"
-PLANS_DIRECTORY = "C:/Dor/Apps/TaskerPlanner/plans"
-PLAN_QUESTIONS_FILE_PATH = "data/plan-questions/plan.json"
 
 def setLogger():
     logging.basicConfig(filename='taskerPlanner.log', level=logging.DEBUG)
@@ -19,7 +17,7 @@ def setLogger():
     logging.getLogger().addHandler(streamHandler)
 
 def getPlansList():
-    return os.listdir(PLANS_DIRECTORY)
+    return os.listdir(getPlansDirectory())
 
 def createChoosePlanItem() -> SubmenuItem:
     showPlansItem = SelectionMenu(getPlansList())
@@ -29,7 +27,8 @@ def createMenu(userQuestioner: UserQuestioner) -> ConsoleMenu:
     menu = ConsoleMenu("Tasker Planner", "By dorshaar")
     menu.formatter = MenuFormatBuilder().set_title_align('center').set_subtitle_align('center').set_border_style_type(MenuBorderStyleType.DOUBLE_LINE_BORDER).show_prologue_top_border(True).show_prologue_bottom_border(True)
 
-    askQuestionsFromJsonFileItem = FunctionItem("Start new plan", userQuestioner.askQuestionsFromJsonFile, [PLAN_QUESTIONS_FILE_PATH])
+    askQuestionsFromJsonFileItem = FunctionItem(
+        "Start new plan", userQuestioner.askQuestionsFromJsonFile, [PLAN_QUESTIONS_FILE_PATH])
     editPlanItem = FunctionItem("Edit exiting plan", userQuestioner.editPlan)
     choosePlanItem = createChoosePlanItem()
 
@@ -71,7 +70,8 @@ def main():
     setLogger()
 
     stringReplacer = StringReplacer()
-    userQuestioner = UserQuestioner(stringReplacer)
+    fileSaver = FileSaver()
+    userQuestioner = UserQuestioner(stringReplacer, fileSaver)
 
     menu = createMenu(userQuestioner)
     runMenu(menu)

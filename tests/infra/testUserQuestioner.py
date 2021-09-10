@@ -1,8 +1,10 @@
 import unittest
 from unittest import mock
 from unittest.mock import Mock
+from unittest.mock import MagicMock
 from package.domain.stringReplacer import StringReplacer
 from package.infra.userQuestioner import UserQuestioner
+from package.domain.fileSaver import FileSaver
 
 class TestUserQuestioner(unittest.TestCase):
 
@@ -29,10 +31,14 @@ class TestUserQuestioner(unittest.TestCase):
     @mock.patch('package.infra.userQuestioner.input', input_mock)
     def test_askQuestionsFromJsonFile_bug_asExpected(self):
         stringReplacer = StringReplacer()
+        fileSaver = FileSaver()
+        fileSaver.savePlan = MagicMock()
 
-        userQuestioner = UserQuestioner(stringReplacer)
+        userQuestioner = UserQuestioner(stringReplacer, fileSaver)
 
         planDict = userQuestioner.askQuestionsFromJsonFile('plan.json')
+        fileSaver.savePlan.assert_called_once()
+
         value = planDict.pop("taskType")
         self.assertEqual("bug", value)
 
@@ -107,10 +113,14 @@ class TestUserQuestioner(unittest.TestCase):
     @mock.patch('package.infra.userQuestioner.input', input_mock)
     def test_askQuestionsFromJsonFile_feature_asExpected(self):
         stringReplacer = StringReplacer()
+        fileSaver = FileSaver()
+        fileSaver.savePlan = MagicMock()
 
-        userQuestioner = UserQuestioner(stringReplacer)
+        userQuestioner = UserQuestioner(stringReplacer, fileSaver)
 
         planDict = userQuestioner.askQuestionsFromJsonFile('plan.json')
+        fileSaver.savePlan.assert_called_once()
+        
         value = planDict.pop("taskType")
         self.assertEqual("feature", value)
 
@@ -161,8 +171,8 @@ class TestUserQuestioner(unittest.TestCase):
     @mock.patch('package.infra.userQuestioner.input', input_mock)
     def test_editPlan_asExpected(self):
         stringReplacer = StringReplacer()
-
-        userQuestioner = UserQuestioner(stringReplacer)
+        fileSaver = FileSaver()
+        userQuestioner = UserQuestioner(stringReplacer, fileSaver)
 
         userQuestioner.stateDict = {
             "taskType": "feature",

@@ -1,9 +1,12 @@
 import json
 import logging
+from package.domain.fileSaver import FileSaver
+from package.domain.stringReplacer import StringReplacer
 
 class UserQuestioner:
-    def __init__(self, stringReplacer):
+    def __init__(self, stringReplacer: StringReplacer, fileSaver: FileSaver):
         self.stringReplacer = stringReplacer
+        self.fileSaver = fileSaver
         self.stateDict = {}
         self.lastQuestion = ""
         self.userInput = ""
@@ -115,6 +118,7 @@ class UserQuestioner:
                 self.__handlePlanSectionByKey(planSection, key)
         
         jsonFile.close()
+        self.fileSaver.savePlan(self.stateDict)
         return self.stateDict
 
     def editPlan(self):
