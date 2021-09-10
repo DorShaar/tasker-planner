@@ -7,8 +7,8 @@ from consolemenu.format import *
 from domain.stringReplacer import StringReplacer
 from infra.userQuestioner import UserQuestioner
 
-PLANS_DIRECTORY = "data/plans/"
-# PLANS_DIRECTORY = "C:/Dor/Apps/TaskerPlanner/plans"
+# PLANS_DIRECTORY = "data/plans/"
+PLANS_DIRECTORY = "C:/Dor/Apps/TaskerPlanner/plans"
 PLAN_QUESTIONS_FILE_PATH = "data/plan-questions/plan.json"
 
 def setLogger():
@@ -40,20 +40,28 @@ def createMenu(userQuestioner: UserQuestioner) -> ConsoleMenu:
 
     return menu
 
+def handleChosenPlan(menu: ConsoleMenu, choosePlanItem: SubmenuItem, currentPlan: str):
+    if choosePlanItem.get_return() is not None:
+        plansList = getPlansList()
+        currentPlan = plansList[choosePlanItem.get_return()]
+        menu.prologue_text = f"Current plan: {currentPlan}"
+        return currentPlan
+
+    return currentPlan
+
 def runMenu(menu: ConsoleMenu):
     currentPlan = "None"
 
     while not menu.is_selected_item_exit():
         menu.prologue_text = f"Current plan: {currentPlan}"
         
-        if menu.selected_item is menu.items[2]:
-            plansList = getPlansList()
-            if menu.items[2].get_return() is not None:
-                currentPlan = plansList[menu.items[2].get_return()]
-                menu.prologue_text = f"Current plan: {currentPlan}"
+        choosePlanItem = menu.items[2]
 
+        if menu.selected_item is choosePlanItem:
+            currentPlan = handleChosenPlan(menu, choosePlanItem, currentPlan)
+
+        menu.remove_item(choosePlanItem)
         choosePlanItem = createChoosePlanItem()
-        menu.remove_item(menu.items[2])
         menu.append_item(choosePlanItem)
 
         menu.draw()
