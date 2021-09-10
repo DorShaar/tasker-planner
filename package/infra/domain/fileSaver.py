@@ -7,6 +7,10 @@ from .consts import getPlansDirectory
 class FileSaver:
 
     def savePlan(self, stateDict: Dict):
+        if "taskName" not in stateDict:
+            logging.debug("Not saving since no task name was given")
+            return
+
         fileName = stateDict["taskName"]
         fileName = fileName.replace(" ", "_").lower()
         filePath = os.path.join(getPlansDirectory(), fileName)

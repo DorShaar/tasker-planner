@@ -4,7 +4,7 @@ import os
 from consolemenu import *
 from consolemenu.items import *
 from consolemenu.format import *
-from infra.domain.consts import PLAN_QUESTIONS_FILE_PATH, getPlansDirectory
+from infra.domain.consts import getPlanQuestionsFilePathDirectory, getPlansDirectory
 from infra.domain.stringReplacer import StringReplacer
 from infra.domain.fileSaver import FileSaver
 from infra.userQuestioner import UserQuestioner
@@ -28,7 +28,7 @@ def createMenu(userQuestioner: UserQuestioner) -> ConsoleMenu:
     menu.formatter = MenuFormatBuilder().set_title_align('center').set_subtitle_align('center').set_border_style_type(MenuBorderStyleType.DOUBLE_LINE_BORDER).show_prologue_top_border(True).show_prologue_bottom_border(True)
 
     askQuestionsFromJsonFileItem = FunctionItem(
-        "Start new plan", userQuestioner.askQuestionsFromJsonFile, [PLAN_QUESTIONS_FILE_PATH])
+        "Start new plan", userQuestioner.askQuestionsFromJsonFile, [getPlanQuestionsFilePathDirectory()])
     editPlanItem = FunctionItem("Edit exiting plan", userQuestioner.editPlan)
     choosePlanItem = createChoosePlanItem()
 
@@ -48,32 +48,38 @@ def handleChosenPlan(menu: ConsoleMenu, choosePlanItem: SubmenuItem, currentPlan
 
     return currentPlan
 
-def findIndexOfShowAllPlans(menu: ConsoleMenu):
+def findIndexOfMenuItem(menu: ConsoleMenu, itemText):
     index = 0
     
     for item in menu.items:
-        if str(item) == "Tasker Planner Show all plans":
+        if str(item) == "Tasker Planner " + itemText:
             return index
 
         index = index + 1
 
+def updateChoosePlanItem(menu: ConsoleMenu, choosePlanItem: SubmenuItem):
+    menu.remove_item(choosePlanItem)
+    choosePlanItem = createChoosePlanItem()
+    menu.append_item(choosePlanItem)
+
 def runMenu(menu: ConsoleMenu, userQuestioner: UserQuestioner):
     currentPlan = "None"
-    indexOfShowAllPlans = findIndexOfShowAllPlans(menu)
+    indexOfShowAllPlansItem = findIndexOfMenuItem(menu, "Show all plans")
+    indexOfStartNewPlanItem = findIndexOfMenuItem(menu, "Start new plan")
 
+    menu.prologue_text = f"Current plan: {currentPlan}"
+    
     while not menu.is_selected_item_exit():
-        menu.prologue_text = f"Current plan: {currentPlan}"
-        
-        choosePlanItem = menu.items[indexOfShowAllPlans]
-
-        if menu.selected_item is choosePlanItem:
-            currentPlan = handleChosenPlan(menu, choosePlanItem, currentPlan)
+        if menu.selected_option == indexOfShowAllPlansItem:
+            currentPlan = handleChosenPlan(menu, menu.items[indexOfShowAllPlansItem], currentPlan)
             userQuestioner.loadPlan(os.path.join(getPlansDirectory(), currentPlan))
 
-        menu.remove_item(choosePlanItem)
-        choosePlanItem = createChoosePlanItem()
-        menu.append_item(choosePlanItem)
+        if menu.selected_option == indexOfStartNewPlanItem:
+            startNewPlanItem = menu.items[indexOfStartNewPlanItem]
+            currentPlan = startNewPlanItem.return_value["taskName"]
+            updateChoosePlanItem(menu, menu.items[indexOfShowAllPlansItem])
 
+        menu.prologue_text = f"Current plan: {currentPlan}"
         menu.draw()
         menu.process_user_input()
 

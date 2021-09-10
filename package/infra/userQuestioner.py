@@ -77,32 +77,39 @@ class UserQuestioner:
             for sectionKey in section:
                 self.__handlePlanSectionByKey(section, sectionKey)
 
-    def __handlePlanSectionByKey(self, planSection, key):
+    def __handlePlanSectionByKey(self, planSection, key) -> bool:
         if self.userInput in self.exitInputs:
             logging.debug("Exiting..")
-            return
+            return False
 
         try:
             if key == "question":
                 self.__askQuestion(planSection[key])
+                return True
 
             elif key == "allowedAnswers":
                 self.__checkAllowedAnswers(planSection[key])
+                return True
 
             elif key == "answerRange":
                 self.__checkAnswerRange(planSection[key])
+                return True
 
             elif key == "yesNoAnswers":
                 self.__checkYesAndNoAnswers(planSection[key])
+                return True
 
             elif key == "variableName":
                 self.__setVariableName(planSection[key])
+                return True
 
             elif key == "predicat":
                 self.__handlePredicat(planSection[key])
+                return True
 
             else:
                 logging.error('Unexpected key: %s', key)
+                return True
 
         except Exception as ex:
             logging.error('Exception raised during handling key "%s": %s', key, str(ex))
@@ -113,7 +120,8 @@ class UserQuestioner:
         
         for planSection in jsonData['plan']:
             for key in planSection:
-                self.__handlePlanSectionByKey(planSection, key)
+                if not self.__handlePlanSectionByKey(planSection, key):
+                    break
         
         jsonFile.close()
         self.fileSaver.savePlan(self.stateDict)
