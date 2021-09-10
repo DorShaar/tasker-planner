@@ -121,10 +121,14 @@ class UserQuestioner:
         self.fileSaver.savePlan(self.stateDict)
         return self.stateDict
 
+    def loadPlan(self, planPath: str):
+        self.stateDict = self.fileSaver.loadPlan(planPath)
+
     def editPlan(self):
         for key, value in self.stateDict.items():
             logging.debug('%s: %s', key, value)
 
+        logging.debug('\n')
         self.userInput = input("Which key would you like to edit?\n")
         if self.userInput not in self.stateDict:
             logging.debug('Key "%s" does not exist', self.userInput)

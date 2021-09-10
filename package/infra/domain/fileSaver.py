@@ -21,3 +21,7 @@ class FileSaver:
         file.close()
 
         logging.debug("Plan %s saved into %s", fileName, filePath)
+
+    def loadPlan(self, planPath: str) -> Dict:
+        with open(planPath) as jsonFile:
+            return json.load(jsonFile)

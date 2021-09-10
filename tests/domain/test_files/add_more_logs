@@ -1,0 +1,15 @@
+{
+    "taskType": "feature",
+    "taskName": "Add more logs",
+    "userExperience": "User will be able to know where failure has happend",
+    "dod": "80% of the methods will have logs",
+    "requiresLearning": "no",
+    "requiresAnalytics": "yes",
+    "analyticsTime": "1",
+    "isTaskShouldBeForSpecificVersion": "no",
+    "shouldCollectSamples": "yes",
+    "collectSamplesTime": "2",
+    "writingTestsTime": "5",
+    "qaSyncTime": "2",
+    "shouldPresentDoneWork": "no"
+}

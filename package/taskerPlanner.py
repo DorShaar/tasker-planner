@@ -48,16 +48,27 @@ def handleChosenPlan(menu: ConsoleMenu, choosePlanItem: SubmenuItem, currentPlan
 
     return currentPlan
 
-def runMenu(menu: ConsoleMenu):
+def findIndexOfShowAllPlans(menu: ConsoleMenu):
+    index = 0
+    
+    for item in menu.items:
+        if str(item) == "Tasker Planner Show all plans":
+            return index
+
+        index = index + 1
+
+def runMenu(menu: ConsoleMenu, userQuestioner: UserQuestioner):
     currentPlan = "None"
+    indexOfShowAllPlans = findIndexOfShowAllPlans(menu)
 
     while not menu.is_selected_item_exit():
         menu.prologue_text = f"Current plan: {currentPlan}"
         
-        choosePlanItem = menu.items[2]
+        choosePlanItem = menu.items[indexOfShowAllPlans]
 
         if menu.selected_item is choosePlanItem:
             currentPlan = handleChosenPlan(menu, choosePlanItem, currentPlan)
+            userQuestioner.loadPlan(os.path.join(getPlansDirectory(), currentPlan))
 
         menu.remove_item(choosePlanItem)
         choosePlanItem = createChoosePlanItem()
@@ -74,7 +85,7 @@ def main():
     userQuestioner = UserQuestioner(stringReplacer, fileSaver)
 
     menu = createMenu(userQuestioner)
-    runMenu(menu)
+    runMenu(menu, userQuestioner)
 
     logging.info('Tasker Planner Finished')
 

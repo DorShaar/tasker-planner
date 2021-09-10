@@ -9,6 +9,7 @@ RUN pip install --user -r requirements.txt
 
 # Tests.
 RUN python -m unittest tests/domain/testStringReplacer.py
+RUN python -m unittest tests/domain/testFileSaver.py
 RUN python -m unittest tests/infra/testUserQuestioner.py
 
 # second unnamed stage
