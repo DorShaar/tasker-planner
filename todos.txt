@@ -1,1 +1,2 @@
-tasker planner should manage plans according to files
+1. update state dict according to chosen plan
+2. chosen plan will be changed after "Start new plan"
