@@ -1,5 +1,5 @@
 import unittest
-from package.domain.stringReplacer import StringReplacer
+from package.infra.domain.stringReplacer import StringReplacer
 
 class TestUserQuestioner(unittest.TestCase):
 

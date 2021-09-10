@@ -1,7 +1,7 @@
 import json
 import logging
-from package.domain.fileSaver import FileSaver
-from package.domain.stringReplacer import StringReplacer
+from .domain.fileSaver import FileSaver
+from .domain.stringReplacer import StringReplacer
 
 class UserQuestioner:
     def __init__(self, stringReplacer: StringReplacer, fileSaver: FileSaver):

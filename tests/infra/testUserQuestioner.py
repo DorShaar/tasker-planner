@@ -2,9 +2,9 @@ import unittest
 from unittest import mock
 from unittest.mock import Mock
 from unittest.mock import MagicMock
-from package.domain.stringReplacer import StringReplacer
+from package.infra.domain.stringReplacer import StringReplacer
 from package.infra.userQuestioner import UserQuestioner
-from package.domain.fileSaver import FileSaver
+from package.infra.domain.fileSaver import FileSaver
 
 class TestUserQuestioner(unittest.TestCase):
 

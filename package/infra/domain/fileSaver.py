@@ -1,10 +1,11 @@
 import json
 import logging
 import os
-from package.domain.consts import getPlansDirectory
 from typing import Dict
+from .consts import getPlansDirectory
 
 class FileSaver:
+
     def savePlan(self, stateDict: Dict):
         fileName = stateDict["taskName"]
         fileName = fileName.replace(" ", "_").lower()

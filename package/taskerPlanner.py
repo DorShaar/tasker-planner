@@ -1,12 +1,12 @@
 import logging
-from package.domain.fileSaver import FileSaver
 import sys
 import os
 from consolemenu import *
 from consolemenu.items import *
 from consolemenu.format import *
-from package.domain.consts import PLAN_QUESTIONS_FILE_PATH, getPlansDirectory
-from domain.stringReplacer import StringReplacer
+from infra.domain.consts import PLAN_QUESTIONS_FILE_PATH, getPlansDirectory
+from infra.domain.stringReplacer import StringReplacer
+from infra.domain.fileSaver import FileSaver
 from infra.userQuestioner import UserQuestioner
 
 def setLogger():
