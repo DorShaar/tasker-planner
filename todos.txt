@@ -1,2 +1,1 @@
-3. use planViewer.
 4. Fix Exiting.. Exiting.. Exiting..  

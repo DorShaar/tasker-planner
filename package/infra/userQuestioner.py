@@ -115,6 +115,7 @@ class UserQuestioner:
             logging.error('Exception raised during handling key "%s": %s', key, str(ex))
 
     def askQuestionsFromJsonFile(self, fileName: str):
+        self.stateDict = {}
         self.userInput = ""
         self.lastQuestion = ""
         
