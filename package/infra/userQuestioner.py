@@ -10,10 +10,7 @@ class UserQuestioner:
         self.stateDict = {}
         self.lastQuestion = ""
         self.userInput = ""
-        self.exitInputs = {
-            "q" : "exit",
-            "exit" : "exit"
-        }
+        self.exitInputs = ["q", "exit", "bye"]
         self.yesNoInputs = {
             "yes" : "yes",
             "y" : "yes",
@@ -82,6 +79,7 @@ class UserQuestioner:
 
     def __handlePlanSectionByKey(self, planSection, key):
         if self.userInput in self.exitInputs:
+            logging.debug("Exiting..")
             return
 
         try:
@@ -130,6 +128,11 @@ class UserQuestioner:
 
         logging.debug('\n')
         self.userInput = input("Which key would you like to edit?\n")
+
+        if self.userInput in self.exitInputs:
+            logging.debug("Exiting..")
+            return
+
         if self.userInput not in self.stateDict:
             logging.debug('Key "%s" does not exist', self.userInput)
             return
@@ -138,3 +141,5 @@ class UserQuestioner:
         self.userInput = input("Please type your changes\n")
         self.stateDict[key] = self.userInput
         logging.debug('Replaced key "%s" with new value: "%s"', key, self.stateDict[key])
+
+        self.fileSaver.savePlan(self.stateDict)

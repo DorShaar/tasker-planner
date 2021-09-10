@@ -12,11 +12,10 @@ class FileSaver:
         filePath = os.path.join(getPlansDirectory(), fileName)
 
         if os.path.isfile(filePath):
-            logging.warning("File %s already exist", filePath)
-            return
+            logging.debug("Overwritting %s", filePath)
 
         json_object = json.dumps(stateDict, indent = 4)
-        file = open(filePath, "a")
+        file = open(filePath, "w")
         file.write(json_object)
         file.close()
 
@@ -24,4 +23,5 @@ class FileSaver:
 
     def loadPlan(self, planPath: str) -> Dict:
         with open(planPath) as jsonFile:
+            logging.debug("Loaded %s", planPath)
             return json.load(jsonFile)
