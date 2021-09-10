@@ -172,6 +172,7 @@ class TestUserQuestioner(unittest.TestCase):
     def test_editPlan_asExpected(self):
         stringReplacer = StringReplacer()
         fileSaver = FileSaver()
+        fileSaver.savePlan = MagicMock()
         userQuestioner = UserQuestioner(stringReplacer, fileSaver)
 
         userQuestioner.stateDict = {
@@ -183,6 +184,7 @@ class TestUserQuestioner(unittest.TestCase):
         }
 
         userQuestioner.editPlan()
+        fileSaver.savePlan.assert_called_once()
         self.assertEqual("Reduce redundant logs", userQuestioner.stateDict["taskName"])
 
 if __name__ == '__main__':

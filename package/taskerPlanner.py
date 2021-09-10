@@ -39,11 +39,11 @@ def createMenu(userQuestioner: UserQuestioner) -> ConsoleMenu:
 
     return menu
 
-def handleChosenPlan(menu: ConsoleMenu, choosePlanItem: SubmenuItem, currentPlan: str):
+def handleChosenPlan(choosePlanItem: SubmenuItem, userQuestioner:UserQuestioner, currentPlan: str):
     if choosePlanItem.get_return() is not None:
         plansList = getPlansList()
         currentPlan = plansList[choosePlanItem.get_return()]
-        menu.prologue_text = f"Current plan: {currentPlan}"
+        userQuestioner.loadPlan(os.path.join(getPlansDirectory(), currentPlan))
         return currentPlan
 
     return currentPlan
@@ -68,17 +68,17 @@ def runMenu(menu: ConsoleMenu, userQuestioner: UserQuestioner):
     indexOfStartNewPlanItem = findIndexOfMenuItem(menu, "Start new plan")
 
     menu.prologue_text = f"Current plan: {currentPlan}"
-    
+
     while not menu.is_selected_item_exit():
         if menu.selected_option == indexOfShowAllPlansItem:
-            currentPlan = handleChosenPlan(menu, menu.items[indexOfShowAllPlansItem], currentPlan)
-            userQuestioner.loadPlan(os.path.join(getPlansDirectory(), currentPlan))
+            currentPlan = handleChosenPlan(menu.items[indexOfShowAllPlansItem], userQuestioner, currentPlan)
 
         if menu.selected_option == indexOfStartNewPlanItem:
             startNewPlanItem = menu.items[indexOfStartNewPlanItem]
             currentPlan = startNewPlanItem.return_value["taskName"]
-            updateChoosePlanItem(menu, menu.items[indexOfShowAllPlansItem])
 
+        updateChoosePlanItem(menu, menu.items[indexOfShowAllPlansItem])
+        
         menu.prologue_text = f"Current plan: {currentPlan}"
         menu.draw()
         menu.process_user_input()
