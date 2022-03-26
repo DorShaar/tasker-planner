@@ -10,7 +10,7 @@
 			"variableName": "taskName"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "taskType",
 				"predicatCases": {
 					"bug": {
@@ -34,7 +34,7 @@
 			"variableName": "requiresLearning"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "requiresLearning",
 				"predicatCases": {
 					"yes": {
@@ -46,7 +46,7 @@
 			}
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "requiresLearning",
 				"predicatCases": {
 					"yes": {
@@ -63,7 +63,7 @@
 			"variableName": "requiresAnalytics"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "requiresAnalytics",
 				"predicatCases": {
 					"yes": {
@@ -80,7 +80,7 @@
 			"variableName": "isTaskShouldBeForSpecificVersion"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "isTaskShouldBeForSpecificVersion",
 				"predicatCases": {
 					"yes": {
@@ -91,7 +91,7 @@
 			}
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "isTaskShouldBeForSpecificVersion",
 				"predicatCases": {
 					"yes": {
@@ -108,7 +108,7 @@
 			"variableName": "shouldCollectSamples"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "shouldCollectSamples",
 				"predicatCases": {
 					"yes": {
@@ -120,7 +120,7 @@
 			}
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "taskType",
 				"predicatCases": {
 					"bug": {
@@ -147,7 +147,7 @@
 			"variableName": "shouldPresentDoneWork"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "shouldPresentDoneWork",
 				"predicatCases": {
 					"yes": {

@@ -2,12 +2,12 @@ import unittest
 from unittest import mock
 from unittest.mock import Mock
 from unittest.mock import MagicMock
-from package.infra.domain.stringReplacer import StringReplacer
+from package.domain.stringReplacer import StringReplacer
 from package.infra.userQuestioner import UserQuestioner
-from package.infra.domain.fileSaver import FileSaver
+from package.domain.fileSaver import FileSaver
+
 
 class TestUserQuestioner(unittest.TestCase):
-
     input_mock = Mock()
     input_mock.side_effect = [
         "k", "b",
@@ -28,6 +28,7 @@ class TestUserQuestioner(unittest.TestCase):
         "2",
         "no"
         ]
+
     @mock.patch('package.infra.userQuestioner.input', input_mock)
     def test_askQuestionsFromJsonFile_bug_asExpected(self):
         stringReplacer = StringReplacer()
@@ -110,6 +111,7 @@ class TestUserQuestioner(unittest.TestCase):
         "2",
         "no"
         ]
+
     @mock.patch('package.infra.userQuestioner.input', input_mock)
     def test_askQuestionsFromJsonFile_feature_asExpected(self):
         stringReplacer = StringReplacer()
@@ -168,6 +170,7 @@ class TestUserQuestioner(unittest.TestCase):
         "taskName",
         "Reduce redundant logs",
         ]
+
     @mock.patch('package.infra.userQuestioner.input', input_mock)
     def test_editPlan_asExpected(self):
         stringReplacer = StringReplacer()
@@ -186,6 +189,7 @@ class TestUserQuestioner(unittest.TestCase):
         userQuestioner.editPlan()
         fileSaver.savePlan.assert_called_once()
         self.assertEqual("Reduce redundant logs", userQuestioner.stateDict["taskName"])
+
 
 if __name__ == '__main__':
     unittest.main()

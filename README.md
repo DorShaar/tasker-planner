@@ -5,7 +5,7 @@ As part of my real work, I noticed that I need some small process that will ask 
 
 ## How to run
 You should have docker in order to run it without problems.\
-Clone that repo into your computer and run the `docker-build.bat` (If you are a linux user just follow the commands inside, I build it for personal use so no need to handle all cases..). It will create docker image called tasker-planner with the your input version.\
+Clone that repo into your computer and run the `docker-build.bat` (If you are a linux user just follow the commands inside, I build it for personal use so no need to handle all cases..). It will create docker image called tasker-planner with your input version.\
 After that you can run `docker-run.bat`, insert the version you would like to run and enjoy:\
 
 ## Usage

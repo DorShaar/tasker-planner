@@ -1,5 +1,6 @@
 import unittest
-from package.infra.domain.stringReplacer import StringReplacer
+from package.domain.stringReplacer import StringReplacer
+
 
 class TestUserQuestioner(unittest.TestCase):
 
@@ -13,7 +14,7 @@ class TestUserQuestioner(unittest.TestCase):
         stringReplacer = StringReplacer()
         replacedString = stringReplacer.replaceString(string, variablesDict)
 
-        assert replacedString == "Is 'Clean all backlog' is well defined? Is 'feature' is bug or feature?"
+        self.assertEqual("Is 'Clean all backlog' is well defined? Is 'feature' is bug or feature?", replacedString)
 
     def test_replaceString_abnormalCase_OnlyOneIsReplaced(self):
         string = "Is '{taskName}' is well defined? Is '{taskType' is bug or feature?"
@@ -25,4 +26,4 @@ class TestUserQuestioner(unittest.TestCase):
         stringReplacer = StringReplacer()
         replacedString = stringReplacer.replaceString(string, variablesDict)
 
-        assert replacedString == "Is 'Clean all backlog' is well defined? Is '{taskType' is bug or feature?"
+        self.assertEqual("Is 'Clean all backlog' is well defined? Is '{taskType' is bug or feature?",  replacedString)

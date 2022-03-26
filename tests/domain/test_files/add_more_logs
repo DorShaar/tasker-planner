@@ -1,7 +1,7 @@
 {
     "taskType": "feature",
     "taskName": "Add more logs",
-    "userExperience": "User will be able to know where failure has happend",
+    "userExperience": "User will be able to know where failure has happened",
     "dod": "80% of the methods will have logs",
     "requiresLearning": "no",
     "requiresAnalytics": "yes",

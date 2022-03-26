@@ -3,15 +3,17 @@ from consolemenu import selection_menu, console_menu
 from consolemenu.format.menu_borders import MenuBorderStyleType
 from consolemenu.items import function_item, submenu_item
 from consolemenu.menu_formatter import MenuFormatBuilder
-from infra.domain.fileSaver import FileSaver
-from infra.domain.consts import getPlanQuestionsFilePathDirectory, getPlansDirectory
-from infra.planViewer import PlanViewer
-from infra.userQuestioner import UserQuestioner
+from package.domain.fileSaver import FileSaver
+from package.domain.settings import Settings
+from package.infra.planViewer import PlanViewer
+from package.infra.userQuestioner import UserQuestioner
 
 
 class TaskerPlannerMenu:
-    def __getPlansList(self):
-        return os.listdir(getPlansDirectory())
+    @staticmethod
+    def __getPlansList():
+        settings = Settings()
+        return os.listdir(settings.getPlansDirectory())
 
     def __createChoosePlanMenuItem(self) -> submenu_item.SubmenuItem:
         showPlansItem = selection_menu.SelectionMenu(self.__getPlansList())
@@ -19,10 +21,15 @@ class TaskerPlannerMenu:
 
     def __createMenu(self, userQuestioner: UserQuestioner) -> console_menu.ConsoleMenu:
         menu = console_menu.ConsoleMenu("Tasker Planner", "By dorshaar")
-        menu.formatter = MenuFormatBuilder().set_title_align('center').set_subtitle_align('center').set_border_style_type(MenuBorderStyleType.DOUBLE_LINE_BORDER).show_prologue_top_border(True).show_prologue_bottom_border(True)
+        menu.formatter = MenuFormatBuilder().set_title_align('center')\
+                                            .set_subtitle_align('center')\
+                                            .set_border_style_type(MenuBorderStyleType.DOUBLE_LINE_BORDER)\
+                                            .show_prologue_top_border(True).show_prologue_bottom_border(True)
 
-        askQuestionsFromJsonFileItem = function_item.FunctionItem(
-            "Start new plan", userQuestioner.askQuestionsFromJsonFile, [getPlanQuestionsFilePathDirectory()])
+        settings = Settings()
+        askQuestionsFromJsonFileItem = function_item.FunctionItem("Start new plan",
+                                                                  userQuestioner.askQuestionsFromJsonFile,
+                                                                  [settings.getPlanQuestionsFilePath()])
         editPlanItem = function_item.FunctionItem("Edit exiting plan", userQuestioner.editPlan)
         choosePlanItem = self.__createChoosePlanMenuItem()
 
@@ -41,9 +48,11 @@ class TaskerPlannerMenu:
 
     def __handlePlanWasChosen(self, choosePlanItem: submenu_item.SubmenuItem):
         if choosePlanItem.get_return() is not None:
+            settings = Settings()
+
             plansList = self.__getPlansList()
             self.currentPlan = plansList[choosePlanItem.get_return()]
-            self.userQuestioner.loadPlan(os.path.join(getPlansDirectory(), self.currentPlan))
+            self.userQuestioner.loadPlan(os.path.join(settings.getPlansDirectory(), self.currentPlan))
 
     def __findIndexOfMenuItem(self, itemText):
         index = 0
@@ -61,7 +70,7 @@ class TaskerPlannerMenu:
         choosePlanItem = self.__createChoosePlanMenuItem()
         self.menu.append_item(choosePlanItem)
 
-    def __updateViewChoosenPlanInformationMenuItem(self):
+    def __updateViewChosenPlanInformationMenuItem(self):
         viewPlanInformationMenuItemIndex = self.__findIndexOfMenuItem("View plan information")
         if viewPlanInformationMenuItemIndex != -1:
             self.menu.remove_item(self.menu.items[viewPlanInformationMenuItemIndex])
@@ -70,7 +79,7 @@ class TaskerPlannerMenu:
         if viewPlanTimeInformationMenuItemIndex != -1:
             self.menu.remove_item(self.menu.items[viewPlanTimeInformationMenuItemIndex])
 
-        viewChoosenPlanIformationMenuItem = function_item.FunctionItem(
+        viewChosenPlanInformationMenuItem = function_item.FunctionItem(
                 "View plan information",
                 self.planViewer.showPlanInformation,
                 [self.currentPlan])
@@ -80,7 +89,7 @@ class TaskerPlannerMenu:
                 self.planViewer.showPlanTiming,
                 [self.currentPlan])
 
-        self.menu.append_item(viewChoosenPlanIformationMenuItem)
+        self.menu.append_item(viewChosenPlanInformationMenuItem)
         self.menu.append_item(viewPlanTimeInformationMenuItem)
 
     def runMenu(self):
@@ -99,7 +108,7 @@ class TaskerPlannerMenu:
                 self.__updateChoosePlanMenuItem(self.menu.items[ShowAllPlansMenuItemIndex])
 
             if self.currentPlan != "None":
-                self.__updateViewChoosenPlanInformationMenuItem()
+                self.__updateViewChosenPlanInformationMenuItem()
 
             self.menu.prologue_text = f"Current plan: {self.currentPlan}"
             self.menu.draw()

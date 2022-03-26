@@ -10,7 +10,7 @@
 			"variableName": "taskName"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "taskType",
 				"predicatCases": {
 					"bug": {
@@ -34,7 +34,7 @@
 			"variableName": "requiresLearning"
 		},
 		{
-			"predicat": {
+			"predicate": {
 				"predicatParameter": "requiresLearning",
 				"predicatCases": {
 					"yes": {

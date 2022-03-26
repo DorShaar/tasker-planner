@@ -1,7 +1,8 @@
 import json
 import logging
-from .domain.fileSaver import FileSaver
-from .domain.stringReplacer import StringReplacer
+from package.domain.fileSaver import FileSaver
+from package.domain.stringReplacer import StringReplacer
+
 
 class UserQuestioner:
     def __init__(self, stringReplacer: StringReplacer, fileSaver: FileSaver):
@@ -12,8 +13,8 @@ class UserQuestioner:
         self.userInput = ""
         self.exitInputs = ["q", "exit", "bye"]
         self.yesNoInputs = {
-            "yes" : "yes",
-            "y" : "yes",
+            "yes": "yes",
+            "y": "yes",
             "no": "no",
             "n": "no"
         }
@@ -26,7 +27,9 @@ class UserQuestioner:
     def __checkAllowedAnswers(self, allowedAnswers):
         if self.userInput in allowedAnswers:
             if isinstance(allowedAnswers, dict):
-                logging.debug('User input "%s" is mapped to "%s" according to allowed answers', self.userInput, allowedAnswers[self.userInput])
+                logging.debug('User input "%s" is mapped to "%s" according to allowed answers',
+                              self.userInput,
+                              allowedAnswers[self.userInput])
                 self.userInput = allowedAnswers[self.userInput]
 
             return
@@ -56,24 +59,25 @@ class UserQuestioner:
     def __checkYesAndNoAnswers(self, isYesNoAnswersEnabled):
         if isYesNoAnswersEnabled:
             if self.userInput in self.yesNoInputs:
-                logging.debug('User input "%s" is mapped to "%s" according to "yes and no answers"', self.userInput, self.yesNoInputs[self.userInput])
+                logging.debug('User input "%s" is mapped to "%s" according to "yes and no answers"',
+                              self.userInput,
+                              self.yesNoInputs[self.userInput])
                 self.userInput = self.yesNoInputs[self.userInput]
                 return
             
             logging.debug('%s is not an expected answer', self.userInput)
             self.__askQuestion(self.lastQuestion)
             self.__checkYesAndNoAnswers(isYesNoAnswersEnabled)
-                
 
     def __setVariableName(self, variableName):
         logging.debug('Added key "%s" with value "%s" to state dictionary', variableName, self.userInput)
         self.stateDict[variableName] = self.userInput
 
-    def __handlePredicat(self, predicat):
-        predicateParameter = predicat["predicatParameter"]
+    def __handlePredicate(self, predicate):
+        predicateParameter = predicate["predicatParameter"]
         predicateParameterValue = self.stateDict[predicateParameter]
-        if predicateParameterValue in predicat["predicatCases"]:
-            section = predicat["predicatCases"][predicateParameterValue]
+        if predicateParameterValue in predicate["predicatCases"]:
+            section = predicate["predicatCases"][predicateParameterValue]
             for sectionKey in section:
                 self.__handlePlanSectionByKey(section, sectionKey)
 
@@ -103,8 +107,8 @@ class UserQuestioner:
                 self.__setVariableName(planSection[key])
                 return True
 
-            elif key == "predicat":
-                self.__handlePredicat(planSection[key])
+            elif key == "predicate":
+                self.__handlePredicate(planSection[key])
                 return True
 
             else:

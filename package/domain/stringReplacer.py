@@ -1,8 +1,12 @@
 import re as regex
 
-class StringReplacer:
 
-    def getAllShouldBeReplacedStrings(self, string: str):
+class StringReplacer:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def getAllShouldBeReplacedStrings(string: str):
         stringsToReplace = []
 
         startWordsReplacer = []
@@ -16,8 +20,8 @@ class StringReplacer:
         iterationLength = min(len(startWordsReplacer), len(endWordsReplacer))
         
         for i in range(0, iterationLength):
-            substringToRepalce = string[startWordsReplacer[i]:endWordsReplacer[i]+1]
-            stringsToReplace.append(substringToRepalce)
+            substringToReplace = string[startWordsReplacer[i]:endWordsReplacer[i]+1]
+            stringsToReplace.append(substringToReplace)
 
         return stringsToReplace
     
